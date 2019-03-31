@@ -1,0 +1,10 @@
+node_modules/
+out/
+obj/
+package/
+bin/
+env.bat
+img/out/*.jpg
+yarn-error.log
+yarn.lock
+config.json

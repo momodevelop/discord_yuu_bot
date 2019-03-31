@@ -1,0 +1,6 @@
+.map
+run.bat
+test\
+alias.json
+config.json.tmp
+@types\
