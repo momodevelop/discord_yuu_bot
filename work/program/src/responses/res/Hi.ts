@@ -1,5 +1,5 @@
 ﻿import { ResponseBase } from 'libs/Responder/Responder';
-import { CallbackParams } from '../CallbackParams';
+import { CallbackParams } from '../callback-params';
 
 class cResponse implements ResponseBase<CallbackParams> {
  	public async exec(params: CallbackParams): Promise<boolean> {

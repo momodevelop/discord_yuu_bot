@@ -1,4 +1,10 @@
 {
-    "token": ""
-    "prefix": "!sui"
+    "tokens": {
+        "discord": "",
+        "googleCustomSearch": ""
+    },
+    "autoSearchWords" : [
+        "cute"
+    ],
+    "prefix": "yuu"
 }

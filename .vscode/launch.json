@@ -8,7 +8,7 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}\\work\\program\\src\\discord-sui-bot.ts",
+            "program": "${workspaceFolder}\\work\\program\\src\\discord-yuu-bot.ts",
             "outFiles": [
                 "${workspaceFolder}/**/*.js"
             ]

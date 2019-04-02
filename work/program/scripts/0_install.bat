@@ -1,7 +1,7 @@
 @echo off
 Pushd "%~dp0"
 
-set MODULES=discord.js sprintf-js app-module-path @types/sprintf-js @types/node @types/core-js
+set MODULES=discord.js typescript @types/node @types/core-js app-module-path @types/app-module-path request request-promise-native @types/request-promise-native
 
 cd ..
 echo Uninstalling modules...

@@ -7,14 +7,17 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "Gerald 'Momo' Wong <ramza88@gmail.com> (none :()",
+  "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/app-module-path": "^2.2.0",
     "@types/core-js": "^2.5.0",
     "@types/node": "^11.12.2",
-    "@types/sprintf-js": "^1.1.2",
+    "@types/request-promise-native": "^1.0.15",
     "app-module-path": "^2.2.0",
     "discord.js": "^11.4.2",
-    "sprintf-js": "^1.1.2"
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.7",
+    "typescript": "^3.4.1"
   }
 }

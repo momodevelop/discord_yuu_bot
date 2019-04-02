@@ -3,11 +3,10 @@ require('app-module-path').addPath(__dirname);
 
 // Load libs ////////////////////////////////
 import { Client, Message } from 'discord.js';
-import { Commander } from 'libs/Commander/Commander';
-import { Responder } from 'libs/Responder/Responder';
-import { messageMatchCounter } from 'globals/MessageMatchCounter';
-import { CallbackParams as CommandCallbackParams } from 'commands/CallbackParams';
-import { CallbackParams as ResponseCallbackParams } from 'responses/CallbackParams';
+import { Commander } from 'libs/commander/commander';
+import { Responder } from 'libs/responder/responder';
+import { CallbackParams as CommandCallbackParams } from 'commands/callback-params';
+import { CallbackParams as ResponseCallbackParams } from 'responses/callback-params';
 import config from 'config.json'
 
 // Discord bot ////////////////////////////
@@ -16,6 +15,8 @@ if (prefix == "") {
 	console.error("Prefix not defined!")
 	process.exit(0);
 }
+
+console.log(config);
 
 let responder: Responder<ResponseCallbackParams> = new Responder();
 let commander: Commander<CommandCallbackParams> = new Commander();
@@ -27,9 +28,6 @@ async function onMessage(msg: Message): Promise<void> {
 		if (msg.author.id === bot.user.id) {
 			return;
 		}
-
-		// Update the checker for count-start and count-end commands
-		messageMatchCounter.Check(msg.content);
 
 		//ignore case
 		if (msg.content.toLowerCase().startsWith(prefix)) {
@@ -49,9 +47,12 @@ async function onMessage(msg: Message): Promise<void> {
 		}
 
 		else {
-			if (msg.content.match(/\b(sui)\b/ig)) {
-				await responder.exec({bot, msg});
-			}
+			// don't need to match anything
+			await responder.exec({bot, msg});
+
+			//if (msg.content.match(/\b(yuu)\b/ig)) {
+			//	await responder.exec({bot, msg});
+			//}
 		}
 	}
 	catch (e) {
@@ -63,8 +64,8 @@ async function onLoad(): Promise<void> {
 	try {
 		await commander.parseDir(__dirname + '/commands/cmd/');
 		await responder.parseDir(__dirname + '/responses/res/');
-		await bot.login(config.token);
-		console.info("SuiBot up and ready to work! ^^b");
+		await bot.login(config.tokens.discord);
+		console.info("YuuBot up and ready to work! ^^b");
 		bot.user.setActivity("type '" + prefix + " help'");
 		bot.on('message', onMessage);
 	}
