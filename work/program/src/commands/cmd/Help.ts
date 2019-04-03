@@ -1,6 +1,6 @@
-﻿import { CommandBase } from 'libs/commander/commander';
+﻿import { CommandBase } from 'libs/Commander/Commander';
 import { CallbackParams } from 'commands/callback-params';
-import { getAllMessages } from 'messages/msg-help'
+import { getAllMessages } from 'messages/msg-help';
 
 class cCommand implements CommandBase<CallbackParams> {
 	public readonly name: string = "help";

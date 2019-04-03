@@ -6,5 +6,11 @@
     "autoSearchWords" : [
         "cute"
     ],
-    "prefix": "yuu"
+    "prefix": "yuu",
+    "db": {
+        "path": "db/DiscordSuiBot.json",
+        "tables": {
+            "channel":"channel"
+        }
+    }
 }

@@ -3,10 +3,15 @@ interface MessageList {
 }
 
 const messages: MessageList = {
-	"resist": "\
-resist:\n\
-	Check CoC resistance\n\
-	Usage: !coc resist <active> vs <passive>\n",
+	"mute": "\
+mute:\n\
+	Disables spamming images \n\
+	Usage: yuu mute\n",
+
+	"unmute": "\
+unmute:\n\
+	Enables spamming images \n\
+	Usage: yuu unmute\n",
 
 }
 
