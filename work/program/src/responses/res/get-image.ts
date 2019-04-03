@@ -3,6 +3,7 @@ import { CallbackParams } from '../callback-params';
 import allowedAnimals from 'data/allowed-animals.json'
 import config from 'config.json'
 import { getImages } from 'api/google-custom-search'
+import { get as getChannel } from 'models/db/tables/channel'
 
 const kSearchCount = 10;
 
@@ -13,6 +14,13 @@ class cResponse implements ResponseBase<CallbackParams> {
  	public async exec(params: CallbackParams): Promise<boolean> {
 		// Go through the words for keywords. 
 		// Get the first one that it encounters
+		let channel = getChannel(parseInt(params.msg.channel.id));
+		if (channel) {
+			if (channel.muteGetImage == true) {
+				return false;
+			} 
+		}
+
 
 		let animalToSearch: string = "";
 		for(let i = 0; i < allowedAnimals.animals.length; ++i) {

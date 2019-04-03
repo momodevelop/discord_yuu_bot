@@ -8,6 +8,7 @@ import { Responder } from 'libs/responder/responder';
 import { CallbackParams as CommandCallbackParams } from 'commands/callback-params';
 import { CallbackParams as ResponseCallbackParams } from 'responses/callback-params';
 import config from 'config.json'
+import { get as getChannel } from 'models/db/tables/channel'
 
 // Discord bot ////////////////////////////
 const prefix: string = config.prefix || "";
@@ -15,8 +16,6 @@ if (prefix == "") {
 	console.error("Prefix not defined!")
 	process.exit(0);
 }
-
-console.log(config);
 
 let responder: Responder<ResponseCallbackParams> = new Responder();
 let commander: Commander<CommandCallbackParams> = new Commander();
@@ -28,6 +27,8 @@ async function onMessage(msg: Message): Promise<void> {
 		if (msg.author.id === bot.user.id) {
 			return;
 		}
+
+
 
 		//ignore case
 		if (msg.content.toLowerCase().startsWith(prefix)) {
@@ -47,7 +48,7 @@ async function onMessage(msg: Message): Promise<void> {
 		}
 
 		else {
-			// don't need to match anything
+			// don't need to match anything, just takes in all the messages
 			await responder.exec({bot, msg});
 
 			//if (msg.content.match(/\b(yuu)\b/ig)) {
