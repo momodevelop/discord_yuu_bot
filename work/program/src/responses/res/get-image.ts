@@ -1,6 +1,5 @@
 ﻿import { ResponseBase } from 'libs/Responder/Responder';
 import { CallbackParams } from '../callback-params';
-import allowedAnimals from 'data/allowed-animals.json'
 import config from 'config.json'
 import { getImages } from 'api/google-custom-search'
 import { get as getChannel } from 'models/db/tables/channel'
@@ -23,8 +22,8 @@ class cResponse implements ResponseBase<CallbackParams> {
 
 
 		let animalToSearch: string = "";
-		for(let i = 0; i < allowedAnimals.animals.length; ++i) {
-			let regexStr: string = "\\b" + allowedAnimals.animals[i] + "[s]*?\\b";
+		for(let i = 0; i < config.animals.length; ++i) {
+			let regexStr: string = "\\b" + config.animals[i] + "[s]*?\\b";
 			let wordsFound: string[] | null = params.msg.content.match(new RegExp(regexStr, "gi"));
 			if(wordsFound == null)
 				continue;
