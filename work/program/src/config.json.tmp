@@ -3,12 +3,19 @@
         "discord": "",
         "googleCustomSearch": ""
     },
-    "autoSearchWords" : [
-        "cute"
+    
+    "additionalKeywords" : [ 
+        "imgur"
+    ],
+    "randomAdditionalKeywords" : [
+        "cute","funny","adorable","happy","family","together","nap","friends","floating","holding","mother","baby"
+    ],
+    "subjectKeywords": [
+        "otter", "dog", "cat"
     ],
     "prefix": "yuu",
     "db": {
-        "path": "db/DiscordSuiBot.json",
+        "path": "db/discord-yuu-bot.json",
         "tables": {
             "channel":"channel"
         }

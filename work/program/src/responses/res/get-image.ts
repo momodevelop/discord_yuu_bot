@@ -1,7 +1,7 @@
 ﻿import { ResponseBase } from 'libs/Responder/Responder';
 import { CallbackParams } from '../callback-params';
 import config from 'config.json'
-import { getImages } from 'api/google-custom-search'
+import { getImages, SearchParams, OptionalSearchParams } from 'api/google-custom-search'
 import { get as getChannel } from 'models/db/tables/channel'
 
 const kSearchCount = 10;
@@ -21,41 +21,62 @@ class cResponse implements ResponseBase<CallbackParams> {
 		}
 
 
-		let animalToSearch: string = "";
-		for(let i = 0; i < config.animals.length; ++i) {
-			let regexStr: string = "\\b" + config.animals[i] + "[s]*?\\b";
+		let searchStr: string = "";
+		for(let i = 0; i < config.subjectKeywords.length; ++i) {
+			let regexStr: string = "\\b" + config.subjectKeywords[i] + "[s]*?\\b";
 			let wordsFound: string[] | null = params.msg.content.match(new RegExp(regexStr, "gi"));
 			if(wordsFound == null)
 				continue;
 			else {
-				animalToSearch = wordsFound[0];
+				searchStr = wordsFound[0];
 				break;
 			}
 			
 		}
 
-		if (animalToSearch.length == 0) {
+		if (searchStr.length == 0) {
 			return false;
 		}
 
-		// Animal to search is found. 
-		// Now let's just add auto words that will be added to the search
-		for( let word in config.autoSearchWords) {
-			animalToSearch += " " + word;
+		// Words that must make it in
+		for( let word of config.additionalKeywords) {
+			searchStr += " " + word;
 		}
-		
-		let imageSizes = ["huge", "large", "xlarge", "xxlarge"];
 
-		let result: string[] = await getImages(animalToSearch, config.tokens.googleCustomSearch, {
+		// Randomly add additional words to the search
+		// At least around half the additional keywords will go in.
+		let halfRandomAdditionalKeywords: number = config.randomAdditionalKeywords.length * 0.5;
+		let additionalWordAmount: number = Math.floor(Math.random() * halfRandomAdditionalKeywords + halfRandomAdditionalKeywords);
+		let additionalWords: string[] = config.randomAdditionalKeywords.slice();
+		while (additionalWords.length > config.randomAdditionalKeywords.length - additionalWordAmount) {
+			// get a random index, add to string, and remove from array
+			let index: number = Math.floor(Math.random() * additionalWords.length);
+			searchStr += " " + additionalWords[index];
+			additionalWords.splice(index, 1);
+		}
+
+		console.log("Searching: " + searchStr);
+
+		
+		// Pacakage everything nicely for the API
+		// hard coded image sizes...?
+		let imageSizes = ["huge", "large", "xlarge", "xxlarge"];
+		let searchParams: SearchParams = {
+			key: config.keys.googleCustomSearchKey,
+			cx: config.keys.googleCustomSearchCx,
+			q: searchStr
+		}
+
+		let optionalSearchParams: OptionalSearchParams  = {
 			safe: "high",
 			num: kSearchCount,
 			imgSize: imageSizes[Math.floor(Math.random() * imageSizes.length)]
-		});
+		}
+
+		let result: string[] = await getImages(searchParams, optionalSearchParams);
 
 		let selectedLink: string = result[Math.floor(Math.random() * kSearchCount)];
 		let message: string = "Here you go! Cute right? \^\/\/\^\n" + selectedLink; 
-
-		
 
 		await params.msg.reply(message);
 		

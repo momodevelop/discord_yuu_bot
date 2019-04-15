@@ -1,15 +1,17 @@
 import r from 'request-promise-native'
-import getImage from 'responses/res/get-image';
-const kEndpointUrl = "https://www.googleapis.com/customsearch/v1?"
+const kEndpointUrl = "https://www.googleapis.com/customsearch/v1"
 
 function prop<T, K extends keyof T>(obj: T, key: K) {
     return obj[key];
   }
 
 //https://developers.google.com/custom-search/v1/cse/list
-export interface OptionalSearchOptions {
-    q?: string;
-    cx?: string
+export interface SearchParams {
+    q: string;
+    cx: string;
+    key: string;
+}
+export interface OptionalSearchParams {
     c2coff?: string;
     cr?: string;
     dateRestrict?: string;
@@ -156,20 +158,17 @@ export interface Response {
     }[]
 }
 
-// if 'q' is given, it will be overwritten by itemToSearch
-// if 'cx' is given, it will be overwritten by token
-// if 'searchType' is given, it will be overwritten by 'image'
-export async function getImages(itemToSearch: string, token: string, options?: OptionalSearchOptions) : Promise<string[]>
+// getImages will process your request as if it's looking for images, and return an array of links to those images
+// Note: if 'searchType' is given, it will be overwritten by 'image'
+export async function getImages(searchParams: SearchParams, options?: OptionalSearchParams) : Promise<string[]>
 {
-    let finalOptions: OptionalSearchOptions = {};
-    if (options) 
-        finalOptions = options;
-    
-    finalOptions.q = itemToSearch;
-    finalOptions.cx = token;
-    finalOptions.searchType = "image";
+    let tempOptions: OptionalSearchParams | undefined = options;
+    if (tempOptions == null ) {
+        tempOptions = {};
+    }
+    tempOptions.searchType = "image";
 
-    let res: Response = await callApi(finalOptions);
+    let res: Response = await callApi(searchParams, tempOptions);
 
     // extract links from every item
     let result: string[] = [];
@@ -180,18 +179,28 @@ export async function getImages(itemToSearch: string, token: string, options?: O
     return result;
 } 
 
-export async function callApi(options: OptionalSearchOptions) : Promise<Response>
+export async function callApi(reqOptions: SearchParams, options?: OptionalSearchParams) : Promise<Response>
 {
     let query: string = "?";
     
-    let keys:[ string, any ][] = Object.entries(options);
+    // unpack reqOptions
+    let keys:[ string, any ][] = Object.entries(reqOptions);
     for(let i = 0; i < keys.length; ++i) {
         query += keys[i][0] + "=" + keys[i][1] + ((i == keys.length - 1) ? "" : "&");
     }
 
-    query = kEndpointUrl + query;
+    // unpack options
+    if ( options ) {
+        
+        keys = Object.entries(options);
+        for(let i = 0; i < keys.length; ++i) {
+            query += "&" +  keys[i][0] + "=" + keys[i][1];;
+        }
+    }
 
-	let response: any = await r.get(query, {
+    query = encodeURI(query);
+
+	let response: any = await r.get(kEndpointUrl + query, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'

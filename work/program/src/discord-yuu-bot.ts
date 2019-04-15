@@ -8,7 +8,6 @@ import { Responder } from 'libs/responder/responder';
 import { CallbackParams as CommandCallbackParams } from 'commands/callback-params';
 import { CallbackParams as ResponseCallbackParams } from 'responses/callback-params';
 import config from 'config.json'
-import { get as getChannel } from 'models/db/tables/channel'
 
 // Discord bot ////////////////////////////
 const prefix: string = config.prefix || "";
@@ -65,7 +64,7 @@ async function onLoad(): Promise<void> {
 	try {
 		await commander.parseDir(__dirname + '/commands/cmd/');
 		await responder.parseDir(__dirname + '/responses/res/');
-		await bot.login(config.tokens.discord);
+		await bot.login(config.keys.discordToken);
 		console.info("YuuBot up and ready to work! ^^b");
 		bot.user.setActivity("type '" + prefix + " help'");
 		bot.on('message', onMessage);
