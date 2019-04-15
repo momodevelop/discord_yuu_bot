@@ -43,6 +43,14 @@ class cResponse implements ResponseBase<CallbackParams> {
 			searchStr += " " + word;
 		}
 
+		// Words that users might want in
+		for (let i = 0; i < config.additionalManualKeywords.length; ++i) {
+			if (params.msg.content.match(new RegExp("\\b" + config.additionalManualKeywords[i] + "\\b")) !== null) {
+				searchStr += " " + config.additionalManualKeywords[i];
+			}
+		}
+
+
 		// Randomly add additional words to the search
 		// At least around half the additional keywords will go in.
 		if (config.randomAdditionalKeywords.length)
@@ -67,12 +75,16 @@ class cResponse implements ResponseBase<CallbackParams> {
 			imgSize: imageSizes[Math.floor(Math.random() * imageSizes.length)]
 		}
 
-		let result: string[] = await getImages(searchParams, optionalSearchParams);
+		let result: string[]
+		try {
+			result = await getImages(searchParams, optionalSearchParams);
+		} catch {
+			await params.msg.reply("Sorry I ran out of pictures...maybe tomorrow? >_<;");
+			return true;
+		}
 
 		let selectedLink: string = result[Math.floor(Math.random() * kSearchCount)];
 		let message: string = "Here you go! Cute right? \^\/\/\^\n" + selectedLink; 
-
-
 
 		await params.msg.reply(message);
 		
