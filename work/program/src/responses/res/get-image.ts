@@ -52,10 +52,14 @@ class cResponse implements ResponseBase<CallbackParams> {
 
 
 		// Randomly add additional words to the search
-		// At least around half the additional keywords will go in.
 		if (config.randomAdditionalKeywords.length)
 			searchStr += " " + config.randomAdditionalKeywords[Math.floor(Math.random() * config.randomAdditionalKeywords.length)];
 	
+		//Randomly add an image site's name
+		if (config.randomWebsiteKeywords.length)
+			searchStr += " " + config.randomWebsiteKeywords[Math.floor(Math.random() * config.randomWebsiteKeywords.length)];
+	
+
 
 		console.log("Searching: " + searchStr);
 
