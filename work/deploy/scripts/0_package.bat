@@ -16,7 +16,7 @@ mkdir %PACKAGE_PATH%\node_modules
 
 xcopy /S /Y %PROGRAM_PATH%\out %PACKAGE_PATH%\src /EXCLUDE:package_exclude_list.txt
 xcopy /S /Y %PROGRAM_PATH%\node_modules %PACKAGE_PATH%\node_modules /EXCLUDE:package_exclude_list.txt
-xcopy /S /Y %CONTROL_PATH% %PACKAGE_PATH%\src /EXCLUDE:package_exclude_list.txt
+xcopy /S /Y %CONTROL_PATH% %PACKAGE_PATH% /EXCLUDE:package_exclude_list.txt
 xcopy /S /Y %CONFIG_PATH% %PACKAGE_PATH%\src /EXCLUDE:package_exclude_list.txt
 
 popd

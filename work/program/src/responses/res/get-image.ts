@@ -45,15 +45,9 @@ class cResponse implements ResponseBase<CallbackParams> {
 
 		// Randomly add additional words to the search
 		// At least around half the additional keywords will go in.
-		let halfRandomAdditionalKeywords: number = config.randomAdditionalKeywords.length * 0.5;
-		let additionalWordAmount: number = Math.floor(Math.random() * halfRandomAdditionalKeywords + halfRandomAdditionalKeywords);
-		let additionalWords: string[] = config.randomAdditionalKeywords.slice();
-		while (additionalWords.length > config.randomAdditionalKeywords.length - additionalWordAmount) {
-			// get a random index, add to string, and remove from array
-			let index: number = Math.floor(Math.random() * additionalWords.length);
-			searchStr += " " + additionalWords[index];
-			additionalWords.splice(index, 1);
-		}
+		if (config.randomAdditionalKeywords.length)
+			searchStr += " " + config.randomAdditionalKeywords[Math.floor(Math.random() * config.randomAdditionalKeywords.length)];
+	
 
 		console.log("Searching: " + searchStr);
 
@@ -77,6 +71,8 @@ class cResponse implements ResponseBase<CallbackParams> {
 
 		let selectedLink: string = result[Math.floor(Math.random() * kSearchCount)];
 		let message: string = "Here you go! Cute right? \^\/\/\^\n" + selectedLink; 
+
+
 
 		await params.msg.reply(message);
 		

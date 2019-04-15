@@ -11,6 +11,6 @@ cd..
 echo Deploying...
 call plink %IP% -l %USER% -pw %PASS% mkdir %TMP%; mv %BACKUP_SRC% %BACKUP_DEST%; rm -rf %DEST%; mkdir %DEST%;
 call pscp -r -pw %PASS% %SRC%/** %USER%@%IP%:%DEST%
-call plink %IP% -l %USER% -pw %PASS% mv %BACKUP_DEST% %BACKUP_SRC%; rm -rf %TMP%; bash %DEST%/src/setup.sh;
+call plink %IP% -l %USER% -pw %PASS% mv %BACKUP_DEST% %BACKUP_SRC%; rm -rf %TMP%; bash %DEST%/setup.sh;
 echo Deployed!
 popd

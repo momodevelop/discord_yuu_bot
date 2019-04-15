@@ -8,7 +8,6 @@ import { Responder } from 'libs/responder/responder';
 import { CallbackParams as CommandCallbackParams } from 'commands/callback-params';
 import { CallbackParams as ResponseCallbackParams } from 'responses/callback-params';
 import config from 'config.json'
-import { existsSync, mkdirSync } from 'fs';
 
 // Discord bot ////////////////////////////
 const prefix: string = config.prefix || "";

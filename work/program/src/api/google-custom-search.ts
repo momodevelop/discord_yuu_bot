@@ -199,6 +199,7 @@ export async function callApi(reqOptions: SearchParams, options?: OptionalSearch
     }
 
     query = encodeURI(query);
+    console.log(query);
 
 	let response: any = await r.get(kEndpointUrl + query, {
         method: 'GET',
@@ -206,6 +207,8 @@ export async function callApi(reqOptions: SearchParams, options?: OptionalSearch
             'Content-Type': 'application/json'
         }
     })
+
+
 
     return JSON.parse(response);
 }
