@@ -1,0 +1,1 @@
+A Discord bot written for NodeJS that searches for random images of animals for users.
