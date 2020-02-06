@@ -5,3 +5,4 @@ It posts a random image of an animal based on keywords given
 # Technologies used
 * nodeJS
 * discordJS
+* Typescript
