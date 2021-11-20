@@ -1,23 +1,30 @@
 {
-    "tokens": {
-        "discord": "",
-        "googleCustomSearch": ""
+    "keys": {
+        "discordToken": "",
+        "googleCustomSearchKey": "",
+        "googleCustomSearchCx": ""
     },
-    
-    "additionalKeywords" : [ 
-        "imgur"
+    "randomAdditionalKeywords": [
+        "cute", "funny", "adorable", "happy", "family", "together", "nap", "friends", "floating", "holding", "mother", "baby",
+        "wallpaper"
     ],
-    "randomAdditionalKeywords" : [
-        "cute","funny","adorable","happy","family","together","nap","friends","floating","holding","mother","baby"
+    "additionalKeywords": [
+        "image"
+    ],
+    "randomWebsiteKeywords": [
+        "", "imgur"
+    ],
+    "additionalManualKeywords": [
+        "cute", "funny", "adorable", "happy", "family", "together", "nap", "friends", "floating", "holding", "mother", "baby"
     ],
     "subjectKeywords": [
-        "otter", "dog", "cat"
+        "otter", "dog", "cat", "fish"
     ],
     "prefix": "yuu",
     "db": {
         "path": "db/discord-yuu-bot.json",
         "tables": {
-            "channel":"channel"
+            "channel": "channel"
         }
     }
 }
